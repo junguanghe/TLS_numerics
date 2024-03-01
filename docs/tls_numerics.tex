@@ -1,0 +1,31 @@
+\documentclass[aps,prl,preprint]{revtex4-2}
+
+\usepackage{physics}
+
+\begin{document}
+
+We define $t \equiv T/T_{c_0}$, $\delta \equiv \Delta/T_{c_0}$. The
+dimensionless gap equation is
+\begin{align}
+    \ln{t} = \sum_n\left(\frac{1}{\sqrt{(2n+1)^2 + (\delta/\pi t)^2}} - \frac{1}{|2n+1|}\right).
+\end{align}
+We define the dimensionless scattering time $1/t_{xy} \equiv \hbar/(\tau_{xy}T_{c_0})$,
+dimensionless energy splitting $\epsilon \equiv E/T_{c_0}$,
+the dimensionless kinetic energy $x \equiv \xi/T_{c_0}$,
+and the dimensionless transformed kinetic energy $y(x) \equiv \text{sgn}(x)\sqrt{x^2 + \delta^2}$.
+We have $N_{ge} \equiv N_g - N_e = \tanh(\epsilon/2t)$, and $n_F(-y) - n_F(y) = \tanh(y/2t)$.
+We define the average over energy splittings as $\ev{\dots}_\epsilon \equiv \int\dd\epsilon p(\epsilon)(\dots)$.
+The dimensionless second-order self-energy is
+\begin{align}
+    \sigma_\varepsilon(n,t) \equiv \frac{i\Sigma^{(2)}_\varepsilon(\varepsilon_n)}{\varepsilon_n} & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_\epsilon}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{1}{\sqrt{(\delta/\pi t)^2+(2n+1)^2}}   \nonumber \\
+                                                                                                  & \quad + \frac{1}{t_{nn}}\int\dd x\ev{\frac{1-\tanh(\epsilon/2t)\tanh{(y/2t)}}{(2n+1)^2\pi^2 + (y-\epsilon)^2}}_\epsilon                         \\
+    \sigma_\Delta(n,t) \equiv \frac{\Sigma^{(2)}_\Delta(\varepsilon_n)}{\Delta}                   & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_\epsilon}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{1}{\sqrt{(\delta/\pi t)^2+(2n+1)^2}}   \nonumber \\
+                                                                                                  & \quad + \frac{1}{t_{nn}}\int\dd x\ev{\frac{1-\tanh(\epsilon/2t)\tanh{(y/2t)}}{(2n+1)^2\pi^2 + (y-\epsilon)^2}\frac{y-\epsilon}{y}}_\epsilon.
+\end{align}
+The perturbed dimensionless gap equation is
+\begin{align}
+    \ln{t} = \sum_n\left(\frac{1 + \sigma_\Delta}{\sqrt{(2n+1)^2(1 + \sigma_\varepsilon)^2 + (\delta/\pi t)^2(1 + \sigma_\Delta)^2}} - \frac{1}{|2n+1|}\right).
+\end{align}
+Given the scattering times $t_{vv}$, $t_{vm}$, $t_{mm}$, $t_{nn}$ and the energy splitting distribution $p(\epsilon)$, our goal is to solve for the $\delta - t$ relation.
+
+\end{document}
