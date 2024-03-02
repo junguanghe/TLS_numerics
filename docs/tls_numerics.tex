@@ -4,10 +4,10 @@
 
 \begin{document}
 
-We define $t \equiv T/T_{c_0}$, $\delta \equiv \Delta/T_{c_0}$. The
-dimensionless gap equation is
+We define $t \equiv T/T_{c_0}$, $\delta \equiv \Delta/T_{c_0}$, $\epsilon_n = (2n + 1)\pi t$.
+The dimensionless gap equation is
 \begin{align}
-    \ln{t} = \sum_n\left(\frac{1}{\sqrt{(2n+1)^2 + (\delta/\pi t)^2}} - \frac{1}{|2n+1|}\right).
+    \ln{t} = \pi t\sum_n\left(\frac{1}{\sqrt{\epsilon_n^2 + \delta^2}} - \frac{1}{|\epsilon_n|}\right).
 \end{align}
 We define the dimensionless scattering time $1/t_{xy} \equiv \hbar/(\tau_{xy}T_{c_0})$,
 dimensionless energy splitting $e \equiv E/T_{c_0}$,
@@ -17,23 +17,23 @@ We have $N_{ge} \equiv N_g - N_e = \tanh(e/2t)$, and $n_F(-y) - n_F(y) = \tanh(y
 We define the average over energy splittings as $\ev{\dots}_e \equiv \int\dd e p(e)(\dots)$.
 The dimensionless second-order self-energy is
 \begin{align}
-    \sigma_\varepsilon(n,t) \equiv \frac{i\Sigma^{(2)}_\varepsilon(\varepsilon_n)}{\varepsilon_n} & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{\pi}{\sqrt{\delta^2+(2n+1)^2\pi^2t^2}}   \nonumber \\
-                                                                                                  & \quad + \frac{1}{t_{nn}}\int\dd x\ev{\frac{1-\tanh(e/2t)\tanh{(y/2t)}}{(y-e)^2 + (2n+1)^2\pi^2t^2}}_e                                      \\
-    \sigma_\Delta(n,t) \equiv \frac{\Sigma^{(2)}_\Delta(\varepsilon_n)}{\Delta}                   & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{\pi}{\sqrt{\delta^2+(2n+1)^2\pi^2t^2}}   \nonumber \\
-                                                                                                  & \quad + \frac{1}{t_{nn}}\int\dd x\ev{\frac{1-\tanh(e/2t)\tanh{(y/2t)}}{(y-e)^2 + (2n+1)^2\pi^2t^2}\frac{y-e}{y}}_e.
+    \sigma_\varepsilon(n) \equiv \frac{i\Sigma^{(2)}_\varepsilon(\varepsilon_n)}{\varepsilon_n} & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{\pi}{\sqrt{\delta^2+\epsilon_n^2}}   \nonumber \\
+                                                                                                & \quad + \frac{1}{t_{nn}}\int\dd x\ev{\frac{1-\tanh(e/2t)\tanh{(y/2t)}}{(y-e)^2 + \epsilon_n^2}}_e                                      \\
+    \sigma_\Delta(n) \equiv \frac{\Sigma^{(2)}_\Delta(\varepsilon_n)}{\Delta}                   & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{\pi}{\sqrt{\delta^2+\epsilon_n^2}}   \nonumber \\
+                                                                                                & \quad + \frac{1}{t_{nn}}\int\dd x\ev{\frac{1-\tanh(e/2t)\tanh{(y/2t)}}{(y-e)^2 + \epsilon_n^2}\frac{y-e}{y}}_e.
 \end{align}
 The perturbed dimensionless gap equation is
 \begin{align}
-    \ln{t} = \sum_n\left(\frac{1 + \sigma_\Delta}{\sqrt{(2n+1)^2(1 + \sigma_\varepsilon)^2 + (\delta/\pi t)^2(1 + \sigma_\Delta)^2}} - \frac{1}{|2n+1|}\right).
+    \ln{t} = \pi t \sum_n\left(\frac{1 + \sigma_\Delta}{\sqrt{\epsilon_n^2(1 + \sigma_\varepsilon)^2 + \delta^2(1 + \sigma_\Delta)^2}} - \frac{1}{|\epsilon_n|}\right).
 \end{align}
 Given the scattering times $t_{vv}$, $t_{vm}$, $t_{mm}$, $t_{nn}$ and the energy splitting distribution $p(e)$, our goal is to solve for the $\delta - t$ relation.
 
-The analytically continuated self-energy is
+The dimensionless analytically continuated self-energy is
 \begin{align}
-    - \sigma_\varepsilon(\epsilon,t) \equiv -\frac{\Sigma^{(2)}_\varepsilon(\varepsilon)}{\varepsilon} & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{\pi}{\sqrt{\delta^2 - (\epsilon+i0^+)^2}} \nonumber \\
-                                                                                                       & \quad + \frac{1}{t_{nn}}\int\dd x\ev{\frac{1-\tanh(e/2t)\tanh{(y/2t)}}{(y-e)^2 - (\epsilon+i0^+)^2}}_e \nonumber                            \\
-    \sigma_\Delta(\epsilon,t) \equiv \frac{\Sigma^{(2)}_\Delta(\varepsilon)}{\Delta}                   & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{\pi}{\sqrt{\delta^2 - (\epsilon+i0^+)^2}} \nonumber \\
-                                                                                                       & \quad + \frac{1}{t_{nn}}\int\dd x\ev{\frac{1-\tanh(e/2t)\tanh{(y/2t)}}{(y-e)^2 - (\epsilon+i0^+)^2}\frac{y-e}{y}}_e \nonumber               \\
+    - \sigma_\varepsilon(\epsilon) \equiv -\frac{\Sigma^{(2)}_\varepsilon(\varepsilon)}{\varepsilon} & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{\pi}{\sqrt{\delta^2 - (\epsilon+i0^+)^2}} \nonumber \\
+                                                                                                     & \quad + \frac{1}{t_{nn}}\int\dd x\ev{\frac{1-\tanh(e/2t)\tanh{(y/2t)}}{(y-e)^2 - (\epsilon+i0^+)^2}}_e \nonumber                            \\
+    \sigma_\Delta(\epsilon) \equiv \frac{\Sigma^{(2)}_\Delta(\varepsilon)}{\Delta}                   & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{\pi}{\sqrt{\delta^2 - (\epsilon+i0^+)^2}} \nonumber \\
+                                                                                                     & \quad + \frac{1}{t_{nn}}\int\dd x\ev{\frac{1-\tanh(e/2t)\tanh{(y/2t)}}{(y-e)^2 - (\epsilon+i0^+)^2}\frac{y-e}{y}}_e \nonumber               \\
 \end{align}
 where $\epsilon = \varepsilon / T_{c_0}$ is the dimensionless energy.
 
