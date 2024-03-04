@@ -7,3 +7,5 @@
 *.log
 *.synctex.gz
 *.bib
+
+__pycache__/

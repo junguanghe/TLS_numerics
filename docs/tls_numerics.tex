@@ -68,4 +68,34 @@ When we introduce the effective temperature $t^* \equiv T^*/T_{c_0}$ for the non
 we can directly replace $N_{ge} = \tanh(e/2t)$
 with $N_{ge}^* = \tanh(e/2t^*)$ in the above equations.
 
+Note that we have
+\begin{align}
+      & \Im{ \frac{\epsilon}{ (y-e)^2 - (\epsilon+i0^+)^2} }                  \\
+    = & \Im{ \frac{\epsilon}{ (y-e)^2 - \epsilon^2 - 2i\epsilon 0^+ } }       \\
+    = & \pi |\epsilon| \delta\left((y-e)^2-\epsilon^2\right)                  \\
+    = & \frac{\pi}{2} \bigg[\delta(y-e-\epsilon) + \delta(y-e+\epsilon)\bigg]
+\end{align}
+and
+\begin{align}
+      & \Im{\frac{\epsilon}{\sqrt{\delta^2 - (\epsilon+i0^+)^2}}}                                      \\
+    = & \Im{\frac{\epsilon}{\sqrt{\delta^2 - \epsilon^2 - 2i\epsilon 0^+}}}                            \\
+    = & \frac{|\epsilon|}{\sqrt{\epsilon^2-\delta^2}}\Theta(\epsilon^2-\delta^2) \equiv \rho(\epsilon)
+\end{align}
+and $y = \text{sgn}(x)\sqrt{x^2+\delta^2}$,
+\begin{align}
+    \int\dd x = \int\dd y\rho(y)
+\end{align}
+hence we have
+\begin{align}
+    -\epsilon\Im{\sigma_\varepsilon} = & \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\pi\rho(\epsilon)               \\
+                                       & + \frac{1}{t_{nn}}\frac{\pi}{2} \ev{\rho(\epsilon+e)\bigg[1-N_{ge}\tanh\left(\frac{\epsilon+e}{2t}\right)\bigg]
+    + \rho(-\epsilon+e)\bigg[1-N_{ge}\tanh\left(\frac{-\epsilon+e}{2t}\right)\bigg]}_e \nonumber
+\end{align}
+and
+\begin{align}
+    \Im{\sigma_\Delta} = & \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\pi\frac{\rho(\epsilon)}{\epsilon}                 \\
+                         & + \frac{1}{t_{nn}}\frac{\pi}{2} \ev{\frac{\rho(\epsilon+e)}{\epsilon+e}\bigg[1-N_{ge}\tanh\left(\frac{\epsilon+e}{2t}\right)\bigg]
+    - \frac{\rho(-\epsilon+e)}{-\epsilon+e}\bigg[1-N_{ge}\tanh\left(\frac{-\epsilon+e}{2t}\right)\bigg]}_e \nonumber
+\end{align}
+
 \end{document}
