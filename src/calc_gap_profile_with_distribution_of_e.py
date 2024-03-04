@@ -101,7 +101,7 @@ def main():
     teff = 10  # set to None for teff = t
     N = 50  # number of data points for the gap profile
 
-    num_core = cpu_count()
+    num_core = 25
 
     x = np.zeros((2, N))
     d0, d1 = 1.7, 1.71  # initial guess
