@@ -9,7 +9,12 @@
 We define $t \equiv T/T_{c_0}$, $\delta \equiv \Delta/T_{c_0}$, $\epsilon_n = (2n + 1)\pi t$.
 The dimensionless gap equation is
 \begin{align}
-    \ln{t} = \pi t\sum_n\left(\frac{1}{\sqrt{\epsilon_n^2 + \delta^2}} - \frac{1}{|\epsilon_n|}\right).
+    \ln{t} = \pi t\sum_n\left(\frac{1}{\sqrt{\delta^2 + \epsilon_n^2}} - \frac{1}{|\epsilon_n|}\right).
+\end{align}
+The perturbed dimensionless gap equation is
+\begin{align}
+    \ln{t} & = \pi t \sum_n\left(\frac{1 + \sigma_\Delta/\delta}{\sqrt{(\delta + \sigma_\Delta)^2- (i\epsilon_n - \sigma_\varepsilon)^2}} - \frac{1}{|\epsilon_n|}\right).                          \\
+    \ln{t} & = \pi t \sum_n\left(\frac{1 + \sigma_\Delta/\delta}{\sqrt{\delta^2(1 + \sigma_\Delta/\delta)^2 + \epsilon_n^2(1 - \sigma_\varepsilon/i\epsilon_n)^2}} - \frac{1}{|\epsilon_n|}\right).
 \end{align}
 We define the dimensionless scattering time $1/t_{xy} \equiv \hbar/(\tau_{xy}T_{c_0})$,
 dimensionless energy splitting $e \equiv E/T_{c_0}$,
@@ -19,14 +24,14 @@ We have $N_{ge} \equiv N_g - N_e = \tanh(e/2t)$, and $n_F(-y) - n_F(y) = \tanh(y
 We define the average over energy splittings as $\ev{\dots}_e \equiv \int\dd e p(e)(\dots)$.
 The dimensionless second-order self-energy is
 \begin{align}
-    \sigma_\varepsilon(n) \equiv \frac{i\Sigma^{(2)}_\varepsilon(\varepsilon_n)}{\varepsilon_n} & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{\pi}{\sqrt{\delta^2+\epsilon_n^2}}   \nonumber \\
-                                                                                                & \quad + \frac{1}{t_{nn}}\int\dd x\ev{\frac{1-\tanh(e/2t)\tanh{(y/2t)}}{(y-e)^2 + \epsilon_n^2}}_e                                      \\
-    \sigma_\Delta(n) \equiv \frac{\Sigma^{(2)}_\Delta(\varepsilon_n)}{\Delta}                   & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{\pi}{\sqrt{\delta^2+\epsilon_n^2}}   \nonumber \\
-                                                                                                & \quad + \frac{1}{t_{nn}}\int\dd x\ev{\frac{1-\tanh(e/2t)\tanh{(y/2t)}}{(y-e)^2 + \epsilon_n^2}\frac{y-e}{y}}_e.
-\end{align}
-The perturbed dimensionless gap equation is
-\begin{align}
-    \ln{t} = \pi t \sum_n\left(\frac{1 + \sigma_\Delta}{\sqrt{\epsilon_n^2(1 + \sigma_\varepsilon)^2 + \delta^2(1 + \sigma_\Delta)^2}} - \frac{1}{|\epsilon_n|}\right).
+    -\frac{\sigma_\varepsilon(n)}{i\epsilon_n} \equiv -\frac{\Sigma^{(2)}_\varepsilon(\varepsilon_n)/T_{c_0}}{i\varepsilon_n/T_{c_0}}
+    = -\frac{\Sigma^{(2)}_\varepsilon(\varepsilon_n)}{i\varepsilon_n}
+     & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{\pi}{\sqrt{\delta^2+\epsilon_n^2}}   \nonumber \\
+     & \quad + \frac{1}{t_{nn}}\int\dd x\ev{\frac{1-\tanh(e/2t)\tanh{(y/2t)}}{(y-e)^2 + \epsilon_n^2}}_e                                      \\
+    \frac{\sigma_\Delta(n)}{\delta} \equiv \frac{\Sigma^{(2)}_\Delta(\varepsilon_n)/T_{c_0}}{\Delta/T_{c_0}}
+    = \frac{\Sigma^{(2)}_\Delta(\varepsilon_n)}{\Delta}
+     & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{\pi}{\sqrt{\delta^2+\epsilon_n^2}}   \nonumber \\
+     & \quad + \frac{1}{t_{nn}}\int\dd x\ev{\frac{1-\tanh(e/2t)\tanh{(y/2t)}}{(y-e)^2 + \epsilon_n^2}\frac{y-e}{y}}_e.
 \end{align}
 Given the scattering times $t_{vv}$, $t_{vm}$, $t_{mm}$, $t_{nn}$ and the energy splitting distribution $p(e)$, our goal is to solve for the $\delta - t$ relation.
 
@@ -34,10 +39,13 @@ Given the scattering times $t_{vv}$, $t_{vm}$, $t_{mm}$, $t_{nn}$ and the energy
 
 The dimensionless analytically continuated self-energy is
 \begin{align}
-    - \sigma_\varepsilon(\epsilon) \equiv -\frac{\Sigma^{(2)}_\varepsilon(\varepsilon)}{\varepsilon} & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{\pi}{\sqrt{\delta^2 - (\epsilon+i0^+)^2}} \nonumber \\
-                                                                                                     & \quad + \frac{1}{t_{nn}}\int\dd x\ev{\frac{1-\tanh(e/2t)\tanh{(y/2t)}}{(y-e)^2 - (\epsilon+i0^+)^2}}_e \nonumber                            \\
-    \sigma_\Delta(\epsilon) \equiv \frac{\Sigma^{(2)}_\Delta(\varepsilon)}{\Delta}                   & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{\pi}{\sqrt{\delta^2 - (\epsilon+i0^+)^2}} \nonumber \\
-                                                                                                     & \quad + \frac{1}{t_{nn}}\int\dd x\ev{\frac{1-\tanh(e/2t)\tanh{(y/2t)}}{(y-e)^2 - (\epsilon+i0^+)^2}\frac{y-e}{y}}_e \nonumber               \\
+    - \sigma_\varepsilon(\epsilon) \equiv -\frac{\Sigma^{(2)}_\varepsilon(\varepsilon)}{T_{c_0}}
+     & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{\pi\epsilon}{\sqrt{\delta^2 - (\epsilon+i0^+)^2}} \nonumber \\
+     & \quad + \frac{1}{t_{nn}}\epsilon\int\dd x\ev{\frac{1-\tanh(e/2t)\tanh{(y/2t)}}{(y-e)^2 - (\epsilon+i0^+)^2}}_e \nonumber                            \\
+     \frac{\sigma_\Delta(\epsilon)}{\delta} \equiv \frac{\Sigma^{(2)}_\Delta(\varepsilon)/T_{c_0}}{\Delta/T_{c_0}}
+     = \frac{\Sigma^{(2)}_\Delta(\varepsilon)}{\Delta}
+     & = \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\frac{\pi}{\sqrt{\delta^2 - (\epsilon+i0^+)^2}} \nonumber   \\
+     & \quad + \frac{1}{t_{nn}}\int\dd x\ev{\frac{1-\tanh(e/2t)\tanh{(y/2t)}}{(y-e)^2 - (\epsilon+i0^+)^2}\frac{y-e}{y}}_e \nonumber                 \\
 \end{align}
 where $\epsilon = \varepsilon / T_{c_0}$ is the dimensionless energy.
 
@@ -57,11 +65,9 @@ The second-order retarded quasiclassical Green's function is
 and the density of state is
 \begin{align}
     N(\varepsilon)
-     & = -\frac{1}{\pi}\Im{g^{(2)}(\varepsilon^R)}                                                                                   \\
-     & = \Im{\frac{\varepsilon - \Sigma^{(2)}_\varepsilon(\varepsilon)}
-        {\sqrt{(\Delta + \Sigma^{(2)}_\Delta(\varepsilon))^2
-                - (\varepsilon - \Sigma^{(2)}_\varepsilon(\varepsilon) + i0^+)^2}}}                                                  \\
-     & = \Im{\frac{\epsilon(1-\sigma_\varepsilon)}{\sqrt{\delta^2(1+\sigma_\Delta)^2 - [\epsilon(1-\sigma_\varepsilon) + i0^+]^2}}}.
+     & = -\frac{1}{\pi}\Im{g^{(2)}(\varepsilon^R)}                                                                                                                                              \\
+     & = \Im{\frac{\varepsilon - \Sigma^{(2)}_\varepsilon(\varepsilon)}{\sqrt{(\Delta + \Sigma^{(2)}_\Delta(\varepsilon))^2 - (\varepsilon - \Sigma^{(2)}_\varepsilon(\varepsilon) + i0^+)^2}}} \\
+     & = \Im{\frac{\epsilon-\sigma_\varepsilon}{\sqrt{\delta(1+\sigma_\Delta/\delta)^2 - [\epsilon-\sigma_\varepsilon + i0^+]^2}}}.
 \end{align}
 
 When we introduce the effective temperature $t^* \equiv T^*/T_{c_0}$ for the nonequilibrium distribution of the TLS,
@@ -87,13 +93,13 @@ and $y = \text{sgn}(x)\sqrt{x^2+\delta^2}$,
 \end{align}
 hence we have
 \begin{align}
-    -\epsilon\Im{\sigma_\varepsilon} = & \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\pi\rho(\epsilon)               \\
+    -\Im{\sigma_\varepsilon} = & \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\pi\rho(\epsilon)               \\
                                        & + \frac{1}{t_{nn}}\frac{\pi}{2} \ev{\rho(\epsilon+e)\bigg[1-N_{ge}\tanh\left(\frac{\epsilon+e}{2t}\right)\bigg]
     + \rho(-\epsilon+e)\bigg[1-N_{ge}\tanh\left(\frac{-\epsilon+e}{2t}\right)\bigg]}_e \nonumber
 \end{align}
 and
 \begin{align}
-    \Im{\sigma_\Delta} = & \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\pi\frac{\rho(\epsilon)}{\epsilon}                 \\
+    \Im{\sigma_\Delta}/\delta = & \left(\frac{1}{t_{vv}} + \frac{2\ev{N_{ge}}_e}{t_{vm}} + \frac{1}{t_{mm}}\right)\pi\frac{\rho(\epsilon)}{\epsilon}                 \\
                          & + \frac{1}{t_{nn}}\frac{\pi}{2} \ev{\frac{\rho(\epsilon+e)}{\epsilon+e}\bigg[1-N_{ge}\tanh\left(\frac{\epsilon+e}{2t}\right)\bigg]
     - \frac{\rho(-\epsilon+e)}{-\epsilon+e}\bigg[1-N_{ge}\tanh\left(\frac{-\epsilon+e}{2t}\right)\bigg]}_e \nonumber
 \end{align}
