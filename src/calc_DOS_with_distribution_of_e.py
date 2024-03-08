@@ -2,14 +2,13 @@ from joblib import Parallel, delayed
 import numpy as np
 from scipy import integrate
 from scipy.integrate import quad, dblquad
-from scipy.stats import norm
 import warnings
 
 from calc_gap_profile import solve_d, INV_TVV, INV_TVM, INV_TMM, INV_TNN
 
 
-t_ = 0.9  # calculate dos at temperature t = T/T_c0
-teff_ = None  # calculate dos at effective temperature teff = T_eff/T_c0. set to None if no effective temperature
+t_ = 0.1  # calculate dos at temperature t = T/T_c0
+teff_ = 2  # calculate dos at effective temperature teff = T_eff/T_c0. set to None if no effective temperature
 energy_range_ = 5  # -energy_range < epsilon < energy_range
 
 E1, E2 = 0.237, 3  # sample energy splitting between E1 and E2
@@ -57,7 +56,7 @@ def rho(y):
     return np.abs(y) / np.sqrt(y * y - D * D)
 
 
-def sigma_d(ep):
+def sigma_d_over_d(ep):
     er = ep + 1j * DELTA
     ret = (INV_TVV + 2 * avg_Nge * INV_TVM + INV_TMM) * np.pi / np.sqrt(D * D - er * er)
     int_real1 = dblquad(func_d_real, E1, E2, -np.inf, 0, args=(er,))
@@ -72,7 +71,7 @@ def sigma_d(ep):
     return ret + INV_TNN * (int_real + 1j * int_imag), err
 
 
-def neg_e_times_sigma_e(ep):
+def neg_sigma_e(ep):
     er = ep + 1j * DELTA
     ret = (INV_TVV + 2 * avg_Nge * INV_TVM + INV_TMM) * np.pi * ep / np.sqrt(D * D - er * er)
     int_real1 = dblquad(func_e_real, E1, E2, -np.inf, 0, args=(er,))
@@ -89,10 +88,10 @@ def neg_e_times_sigma_e(ep):
 
 def dos(ep):
     warnings.filterwarnings("ignore", category=integrate.IntegrationWarning)
-    neg_e_se, err1 = neg_e_times_sigma_e(ep)
-    sd, err2 = sigma_d(ep)
-    etilde = ep + neg_e_se
-    dtilde = D * (1 + sd)
+    neg_se, err1 = neg_sigma_e(ep)
+    sd_over_d, err2 = sigma_d_over_d(ep)
+    etilde = ep + neg_se
+    dtilde = D * (1 + sd_over_d)
     err = err1 + err2
     return np.imag(etilde / np.sqrt(dtilde**2 - (etilde + 1j * DELTA) ** 2)), err
 

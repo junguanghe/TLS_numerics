@@ -12,8 +12,8 @@ def p(x):
 NORM = quad(p, E1, E2)[0]
 DIST = f"wipf_{E1}_{E2}_{J}_{SPREAD}"
 
-t = 0.9
-teff = None
+t = 0.1
+teff = 2
 XMAX = 3 # set matplotlib x-axis limit to be (-XMAX, XMAX)
 YMAX = 10 # set matplotlib y-axis limit to be (-0.5, YMAX)
 figure_size = (4,3)
