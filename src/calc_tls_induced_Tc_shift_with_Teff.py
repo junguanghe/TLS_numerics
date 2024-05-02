@@ -9,10 +9,10 @@ if __name__ == "__main__":
     teffs = [None, 0.1, 1, 10, 100, 1000]
     inv_tau = 0.1
     e0 = 0.0001
-    e1 = 10
+    e1 = 100
     
     es = np.linspace(e0, e1, 100)
-    fig, ax = plt.subplots(figsize=(4, 3))
+    fig, ax = plt.subplots()
     tcs = []
     for teff in teffs:
         tcs.append(Parallel(n_jobs=50, verbose=20)(delayed(solve_gap_eq)(e, inv_tau, teff) for e in es))

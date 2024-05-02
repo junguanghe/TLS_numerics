@@ -43,10 +43,10 @@ if __name__ == "__main__":
     N = 1000  # number of Matsubara frequencies
     inv_taus = [0.2, 0.4, 0.6, 0.8, 1.0]
     e0 = 0.0001
-    e1 = 100
+    e1 = 10
     
     es = np.linspace(e0, e1, 100)
-    fig, ax = plt.subplots(figsize=(4, 3))
+    fig, ax = plt.subplots()
     tcs = []
     for inv_tau in inv_taus:
         tcs.append(Parallel(n_jobs=50, verbose=20)(delayed(solve_gap_eq)(e, inv_tau) for e in es))
