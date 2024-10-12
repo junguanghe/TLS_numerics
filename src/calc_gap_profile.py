@@ -75,7 +75,7 @@ def SCE(t, e, D, teff):
 
 # given temperature, solve the self-consistent equation for the gap
 def solve_d(t, e, teff, x0, x1):
-    res = root_scalar(lambda x: SCE(t, e, x, teff), x0=x0, x1=x1)
+    res = root_scalar(lambda x: SCE(t, e, x, teff), x0=x0, x1=x1, rtol=1e-4)
     if not res.converged:
         print(f"T/Tc0={t} not converged")
     return res.root

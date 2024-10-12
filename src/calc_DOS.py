@@ -64,8 +64,8 @@ def rho(y):
 def sigma_d(ep):
     er = ep + 1j * DELTA
     ret = (INV_TVV + 2 * Nge * INV_TVM + INV_TMM) * np.pi / np.sqrt(D * D - er * er)
-    int_real1 = quad(func_d_real, -np.inf, 0, args=(er), limit=LIMIT)
-    int_real2 = quad(func_d_real, 0, np.inf, args=(er), limit=LIMIT)
+    int_real1 = quad(func_d_real, -np.inf, 0, args=(er), limit=LIMIT, epsabs=1e-4, epsrel=1e-4)
+    int_real2 = quad(func_d_real, 0, np.inf, args=(er), limit=LIMIT, epsabs=1e-4, epsrel=1e-4)
     int_imag = np.pi / 2 * (rho(ep + e_) / (ep + e_) * (1 - Nge * np.tanh((ep + e_) / 2 / t_))
                             - rho(-ep + e_) / (-ep + e_) * (1 - Nge * np.tanh((-ep + e_) / 2 / t_)))
     err = int_real1[1] + int_real2[1]
@@ -76,8 +76,8 @@ def sigma_d(ep):
 def neg_e_times_sigma_e(ep):
     er = ep + 1j * DELTA
     ret = (INV_TVV + 2 * Nge * INV_TVM + INV_TMM) * np.pi * ep / np.sqrt(D * D - er * er)
-    int_real1 = quad(func_e_real, -np.inf, 0, args=(er), limit=LIMIT)
-    int_real2 = quad(func_e_real, 0, np.inf, args=(er), limit=LIMIT)
+    int_real1 = quad(func_e_real, -np.inf, 0, args=(er), limit=LIMIT, epsabs=1e-4, epsrel=1e-4)
+    int_real2 = quad(func_e_real, 0, np.inf, args=(er), limit=LIMIT, epsabs=1e-4, epsrel=1e-4)
     int_imag = np.pi / 2 * (rho(ep + e_) * (1 - Nge * np.tanh((ep + e_) / 2 / t_))
                             + rho(-ep + e_) * (1 - Nge * np.tanh((-ep + e_) / 2 / t_))) 
     err = int_real1[1] + int_real2[1]
