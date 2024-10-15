@@ -54,3 +54,11 @@ def Sigma_eps(n, T, E, Delta, Gamma, Nge=0.5):
 
     return Gamma * Nge * T * se_eps, Gamma * Nge * T * se_delta
     
+
+# The asymptotic value of the bare self-energy can be obtained from the Eq. (28)
+# It is easy to see that the Delta part tends to zero as n tends to infinity.
+# For the epsilon part, it can be computed with the formula sum(1/(m^2 + a^2), m, -inf, inf) = π·coth(πa)/a
+
+def SE_asymptotic(T, E, Delta, Gamma, Nge=0.5):
+    a = E/(2*np.pi*T)
+    return Gamma*Nge*(T/E)*a**2*(np.pi/(a*np.tanh(a*np.pi)))
