@@ -13,7 +13,7 @@ SE_eps = []
 SE_delta = []
 
 for n in ns:
-    se = SE0(None, n, T, E, Delta, Gamma)
+    se = SE_fn(None, n, T, E, Delta, Gamma)
     SE_eps.append(se[0])
     SE_delta.append(se[1])
     
