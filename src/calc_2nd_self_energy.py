@@ -5,7 +5,7 @@ import numpy as np
 multp = 30
 n_min = 100
 
-def SE_fn(self, n, T, E, Delta, Gamma, Nge=0.5):
+def SE_fn(self, n, T, E, Delta, Gamma, Nge):
     n_limit = np.abs(n)*30 + n_min
     l = np.arange(-n_limit, n_limit)
     eps_l = 2*np.pi*T*(l+1/2)
@@ -100,4 +100,6 @@ class SelfEnergy:
         return res
 
     # Bind the method
-    eval_RHS = SE_fn
+    eval_with = SE_fn
+    def eval(self, n):
+        return self.eval_with(n, self.T, self.E, self.Delta, self.Gamma, self.Nge)
