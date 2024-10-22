@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 # import matplotlib
 # matplotlib.use("tkagg")
 
+import h5py
+
 ns = [*range(-100, 100)]
 
 T = 0.3
@@ -23,7 +25,7 @@ for n in ns:
 
 
 
-for iter in range(10):
+for iter in range(1, 11):
     print(f"Computing Iter{iter}...")
     SE_now = SelfEnergy(T, E, Delta, Gamma, Nge, np.array(ns), SE_eps_now, SE_delta_now)
     for idx, n in enumerate(ns):
@@ -31,11 +33,18 @@ for iter in range(10):
         SE_eps_now[idx] = se[0]
         SE_delta_now[idx] = se[1] 
 
-    plt.plot(ns, np.imag(SE_eps_now), label=rf"$\Im\Sigma_\epsilon$, Iter{iter}")
-    plt.plot(ns, np.real(SE_delta_now), label=rf"$\Re\Sigma_\Delta$ (real), Iter{iter}")
+    # plt.plot(ns, np.imag(SE_eps_now), label=rf"$\Im\Sigma_\epsilon$, Iter{iter}")
+    # plt.plot(ns, np.real(SE_delta_now), label=rf"$\Re\Sigma_\Delta$ (real), Iter{iter}")
+
+    
+    with h5py.File("SE-Matsubara.h5", "a") as f:
+        f[f"Iter{iter}/epsilon"] = SE_eps_now
+        f[f"Iter{iter}/Delta"] = SE_delta_now
 
 
 
-plt.legend()
-plt.grid()
-plt.savefig("../figures/SE-self-consistent.pdf")
+
+
+# plt.legend()
+# plt.grid()
+# plt.savefig("../figures/SE-self-consistent.pdf")
