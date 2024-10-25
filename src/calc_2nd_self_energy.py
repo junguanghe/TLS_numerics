@@ -5,6 +5,7 @@ import numpy as np
 multp = 30
 n_min = 100
 
+# This function is for computing the self-energy in Matsubara frequencies
 def SE_fn(self, n, T, E, Delta, Gamma, Nge):
     n_limit = np.abs(n)*30 + n_min
     l = np.arange(-n_limit, n_limit)
@@ -59,6 +60,29 @@ def SE_asymptotic(T, E, Delta, Gamma, Nge=0.5):
     a = E/(2*np.pi*T)
     return Gamma*Nge*(T/E)*a**2*(np.pi/(a*np.tanh(a*np.pi)))
 
+
+# This function is for computing the self-energy as a function of the real frequency.
+# The calculation is based on the Matsubara-frequency results.
+def SE_real(self, ϵ, l_limit=1000):
+    l = np.arange(-l_limit, l_limit)
+    eps_l = 2*np.pi*self.T*(l+1/2)
+
+    kernel = self.E/(self.E**2 - (ϵ - 1j*eps_l)**2)
+    # kernel = E/(E**2 + (2*np.pi*T)**2*(n-l)**2)
+    SE_eps_l = self.get_SE_eps(l) if self!=None else 0
+    SE_delta_l = self.get_SE_delta(l) if self!=None else 0
+
+    denom = np.sqrt((self.Delta + SE_delta_l)**2 + (eps_l + 1j*SE_eps_l)**2)
+    prop_eps = (-1j*eps_l + SE_eps_l)/denom
+    prop_delta = (self.Delta + SE_delta_l)/denom
+
+    se_eps = np.sum(kernel*prop_eps)
+    se_delta = np.sum(kernel*prop_delta)
+
+    return (self.Gamma * self.Nge * self.T * se_eps,
+            self.Gamma * self.Nge * self.T * se_delta)
+
+
 # Create a class to save the function Σ(n)
 # so that it can be evaluated for the RHS of the fixed point problem.
 class SelfEnergy:
@@ -101,5 +125,8 @@ class SelfEnergy:
 
     # Bind the method
     eval_with = SE_fn
+
     def eval(self, n):
         return self.eval_with(n, self.T, self.E, self.Delta, self.Gamma, self.Nge)
+
+    eval_real_freq = SE_real

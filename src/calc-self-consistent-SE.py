@@ -6,13 +6,7 @@ import matplotlib.pyplot as plt
 
 import h5py
 
-ns = [*range(-100, 100)]
-
-T = 0.3
-E = 0.6
-Delta = 1.764
-Gamma = 10.0
-Nge = 0.5
+from parameters import *
 
 SE_eps_now = []
 SE_delta_now = []
@@ -25,7 +19,7 @@ for n in ns:
 
 
 
-for iter in range(1, 11):
+for iter in range(1, numIter+1):
     print(f"Computing Iter{iter}...")
     SE_now = SelfEnergy(T, E, Delta, Gamma, Nge, np.array(ns), SE_eps_now, SE_delta_now)
     for idx, n in enumerate(ns):
