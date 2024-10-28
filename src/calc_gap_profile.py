@@ -1,4 +1,3 @@
-from joblib import Parallel, delayed, cpu_count
 import numpy as np
 from scipy.integrate import quad
 from scipy.optimize import root_scalar
@@ -114,4 +113,5 @@ def main():
 
 
 if __name__ == "__main__":
+    from joblib import Parallel, delayed, cpu_count
     main()
