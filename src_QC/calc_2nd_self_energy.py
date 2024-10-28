@@ -56,21 +56,21 @@ def SE_fn(self, n, T, E, Delta, Gamma, Nge):
 # It is easy to see that the Delta part tends to zero as n tends to infinity.
 # For the epsilon part, it can be computed with the formula sum(1/(m^2 + a^2), m, -inf, inf) = π·coth(πa)/a
 
-def SE_asymptotic(T, E, Delta, Gamma, Nge=0.5):
+def SE_asymptotic(T, E, Delta, Gamma, Nge):
     a = E/(2*np.pi*T)
     return Gamma*Nge*(T/E)*a**2*(np.pi/(a*np.tanh(a*np.pi)))
 
 
 # This function is for computing the self-energy as a function of the real frequency.
 # The calculation is based on the Matsubara-frequency results.
-def SE_real(self, ϵ, l_limit=1000):
+def SE_real(self, ϵ, l_limit=10000, bare=False):
     l = np.arange(-l_limit, l_limit)
     eps_l = 2*np.pi*self.T*(l+1/2)
 
     kernel = self.E/(self.E**2 - (ϵ - 1j*eps_l)**2)
     # kernel = E/(E**2 + (2*np.pi*T)**2*(n-l)**2)
-    SE_eps_l = self.get_SE_eps(l) if self!=None else 0
-    SE_delta_l = self.get_SE_delta(l) if self!=None else 0
+    SE_eps_l = 0.0 if bare else self.get_SE_eps(l) 
+    SE_delta_l = 0.0 if bare else self.get_SE_delta(l)
 
     denom = np.sqrt((self.Delta + SE_delta_l)**2 + (eps_l + 1j*SE_eps_l)**2)
     prop_eps = (-1j*eps_l + SE_eps_l)/denom

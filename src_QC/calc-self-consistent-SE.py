@@ -17,6 +17,9 @@ for n in ns:
     SE_eps_now.append(se[0])
     SE_delta_now.append(se[1])
 
+with h5py.File("SE-Matsubara.h5", "a") as f:
+    f["Iter0/epsilon"] = SE_eps_now
+    f["Iter0/Delta"] = SE_delta_now
 
 
 for iter in range(1, numIter+1):

@@ -13,7 +13,7 @@ SE = SelfEnergy(T, E, Delta, Gamma, Nge, np.array(ns), SE_eps_now, SE_delta_now)
 
 
 def DOS(e):
-    se = SE.eval_real_freq(e)
+    se = SE.eval_real_freq(e, bare=True)
     # se = [0., 0.]
     res = (e+1e-10j - se[0])/np.sqrt((Delta+se[1])**2 - (e+1e-10j-se[0])**2)
     return np.imag(res)
