@@ -23,6 +23,9 @@ es = np.arange(-2*Delta, 2*Delta, step=0.05)
 DOSs = []
 for e in es:
     DOSs.append(DOS(e))
+    
 
-plt.plot(es, DOSs)
-plt.show()
+if __name__="__main__":
+    plt.plot(es, DOSs)
+    plt.show()
+    
