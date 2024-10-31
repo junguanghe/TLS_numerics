@@ -14,7 +14,7 @@ with h5py.File("SE-Matsubara.h5", 'r') as f:
     for iter in range(numIter+1):
         eps = f[f"Iter{iter}/epsilon"][:]
         delta = f[f"Iter{iter}/Delta"][:]
-        plt.plot(ns,eps.real, '+', label=f"Re(Σ_ϵ), Iter{iter}")
+        #plt.plot(ns,eps.real, '+', label=f"Re(Σ_ϵ), Iter{iter}")
         plt.plot(ns,eps.imag, '+', label=f"Im(Σ_ϵ), Iter{iter}")
         plt.plot(ns,delta.real, 'x', label=f"Σ_Δ, Iter{iter}")
 
@@ -23,13 +23,13 @@ with h5py.File("SE-Matsubara.h5", 'r') as f:
 SE_eps_old = []
 SE_delta_old = []
 
-# for n in ns:
-#     SE_eps_old.append(-sigma_e(Delta, T, (2*n+1)*np.pi*T, E, T)*(2*n+1)*np.pi*T)
-#     SE_delta_old.append(sigma_d(Delta, T, (2*n+1)*np.pi*T, E, T)*Delta)
+for n in ns:
+    SE_eps_old.append(-sigma_e(Delta, T, (2*n+1)*np.pi*T, E, T)*(2*n+1)*np.pi*T)
+    SE_delta_old.append(sigma_d(Delta, T, (2*n+1)*np.pi*T, E, T)*Delta)
 
 
-# plt.plot(ns, SE_eps_old, label="Σ_ϵ, Old")
-# plt.plot(ns, SE_delta_old, label="Σ_Δ, Old")
+plt.plot(ns, SE_eps_old, label="Σ_ϵ, Old")
+plt.plot(ns, SE_delta_old, label="Σ_Δ, Old")
 
 
 
@@ -55,8 +55,8 @@ def f_eps_branch_cut(e, n, getPart):
     return getPart(res)
 
 def SE_eps_branch_cut(n):
-    realpart = Gamma*Nge*quad(f_eps_branch_cut, -np.inf, np.inf, args=(n, np.real), limit=500)[0]
-    imagpart = Gamma*Nge*quad(f_eps_branch_cut, -np.inf, np.inf, args=(n, np.imag), limit=500)[0]
+    realpart = Gamma*Nge*quad(f_eps_branch_cut, -np.inf, np.inf, args=(n, np.real))[0]
+    imagpart = Gamma*Nge*quad(f_eps_branch_cut, -np.inf, np.inf, args=(n, np.imag))[0]
     return realpart + 1j*imagpart
 
 def f_delta_branch_cut(e, n, getPart):
@@ -68,8 +68,8 @@ def f_delta_branch_cut(e, n, getPart):
     return getPart(res)
 
 def SE_delta_branch_cut(n):
-    realpart = Gamma*Nge*quad(f_delta_branch_cut, -np.inf, np.inf, args=(n, np.real), limit=500)[0]
-    imagpart = Gamma*Nge*quad(f_delta_branch_cut, -np.inf, np.inf, args=(n, np.imag), limit=500)[0]
+    realpart = Gamma*Nge*quad(f_delta_branch_cut, -np.inf, np.inf, args=(n, np.real))[0]
+    imagpart = Gamma*Nge*quad(f_delta_branch_cut, -np.inf, np.inf, args=(n, np.imag))[0]
     return realpart + 1j*imagpart
 
 SE_eps_bc = []
@@ -80,8 +80,8 @@ for n in ns:
 
 SE_eps_analytic = SE_eps_sum() - np.array(SE_eps_bc)
 SE_delta_analytic = SE_delta_sum() - np.array(SE_delta_bc)
-plt.plot(ns, SE_delta_analytic.real, '+', label="real")
-plt.plot(ns, SE_delta_analytic.imag, 'x', label="imag")
+plt.plot(ns, SE_eps_analytic.imag, 'x', label="eps, contour")
+plt.plot(ns, SE_delta_analytic.real, '+', label="eps, contour")
 
 plt.legend()
 plt.show()

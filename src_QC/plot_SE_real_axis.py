@@ -4,6 +4,7 @@ from parameters import *
 import matplotlib.pyplot as plt
 
 from scipy.integrate import quad
+from scipy.integrate import trapezoid
 
 import h5py
 
@@ -16,7 +17,7 @@ with h5py.File("SE-Matsubara.h5", "r") as f:
 
 SE = SelfEnergy(T, E, Delta, Gamma, Nge, np.array(ns), SE_eps_now, SE_delta_now)
 
-es = np.arange(-3*Delta, 3*Delta, step=0.051)
+es = np.arange(-3*Delta, 3*Delta, step=0.051234)
 SE_eps = []
 SE_delta = []
 
@@ -87,6 +88,16 @@ def SE_delta_on_real(e, z):
     res = E/(E**2 - (z-e)**2)*(Delta)*(1/np.sqrt(Delta**2 - ep**2) - 1/np.sqrt(Delta**2 - em**2))*fermi
     return -res/(2j*np.pi) # The minus sign because this is from the contour integral, not residue.
 
+
+def u(t):
+    return t/(1-t**2)
+def J(t):
+    return (1+t**2)/(1-t**2)**2
+
+ts = np.linspace(-1+1e-10, 1-1e-10, num=10000)
+ys = np.exp(-u(ts)**2)*J(ts)
+print(trapezoid(ys, ts))
+
 SE_eps_contour = []
 SE_delta_contour = []
 
@@ -106,6 +117,12 @@ for e in es:
     #                limit=1000)
     res1 = quad(SE_eps_on_real, -np.inf, np.inf, args=(z), epsabs=1e-5, limit=50000, complex_func=True)
     SE_eps_contour.append((res1[0])*Gamma*Nge)
+
+    # Trapezoid rule
+    # ys = SE_eps_on_real(u(ts), z)*J(ts)
+    # res1 = trapezoid(ys, ts)
+    # SE_eps_contour.append((res1)*Gamma*Nge)
+
     # res_UHP = quad(SE_delta_on_real_re, -np.inf, np.inf, args=(z, True),
     #                limit=1000)
     # res_LHP = quad(SE_delta_on_real_re, -np.inf, np.inf, args=(z, False),
