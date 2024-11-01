@@ -48,7 +48,14 @@ for e in es:
 
 ### Contour integral
 
-i0 = 1e-4j
+i0 = 1e-6j
+
+def Fermi(e):
+    exp_fact = np.exp(e/T)
+    if np.isinf(exp_fact):
+        return 0.0
+    return 1.0/(np.exp(e/T)+1.0)
+
 
 def SE_eps_on_real_re(e, z, UHP):
     fermi = 1/(np.exp(e/T)+1)
@@ -56,18 +63,22 @@ def SE_eps_on_real_re(e, z, UHP):
     res = E/(E**2 - (z-epm)**2)*(-epm)/np.sqrt(Delta**2 - epm**2)*fermi
     return -np.real(res/(2j*np.pi)) # The minus sign because this is from the contour integral, not residue.
 
-def SE_eps_on_real_im(e, z, UHP):
+def SE_eps_on_real_im(e, z):
     fermi = 1/(np.exp(e/T)+1)
-    epm = e+i0 if UHP else e-i0
-    res = E/(E**2 - (z-epm)**2)*(-epm)/np.sqrt(Delta**2 - epm**2)*fermi
+    ep = e+i0 
+    em = e-i0
+    res = E/(E**2 - (z-e)**2)*(-e)*(1/np.sqrt(Delta**2 - ep**2) - 1/np.sqrt(Delta**2 - em**2))*fermi
     return -np.imag(res/(2j*np.pi))
 
 def SE_eps_on_real(e, z):
     fermi = 1/(np.exp(e/T)+1)
     ep = e+i0 
     em = e-i0
-    res = E/(E**2 - (z-e)**2)*(-e)*(1/np.sqrt(Delta**2 - ep**2) - 1/np.sqrt(Delta**2 - em**2))*fermi
-    return -res/(2j*np.pi) # The minus sign because this is from the contour integral, not residue.
+    # res = E/(E**2 - (z-e)**2)*(-e)*(1/np.sqrt(Delta**2 - ep**2) - 1/np.sqrt(Delta**2 - em**2))*fermi
+    # return -res/(2j*np.pi) # The minus sign because this is from the contour integral, not residue.
+    res_u = E/(E**2 - (z-ep)**2) * (-ep)/np.sqrt(Delta**2 - ep**2) * Fermi(ep)
+    res_d = E/(E**2 - (z-em)**2) * (-em)/np.sqrt(Delta**2 - em**2) * Fermi(em)
+    return -(res_u-res_d)/(2j*np.pi)
 
 def SE_delta_on_real_re(e, z, UHP):
     fermi = 1/(np.exp(e/T)+1)
@@ -82,11 +93,13 @@ def SE_delta_on_real_im(e, z, UHP):
     return -np.imag(res/(2j*np.pi))
 
 def SE_delta_on_real(e, z):
-    fermi = 1/(np.exp(e/T)+1)
     ep = e+i0 
     em = e-i0
-    res = E/(E**2 - (z-e)**2)*(Delta)*(1/np.sqrt(Delta**2 - ep**2) - 1/np.sqrt(Delta**2 - em**2))*fermi
-    return -res/(2j*np.pi) # The minus sign because this is from the contour integral, not residue.
+    # res = E/(E**2 - (z-e)**2)*(Delta)*(1/np.sqrt(Delta**2 - ep**2) - 1/np.sqrt(Delta**2 - em**2))*fermi
+    # return -res/(2j*np.pi) # The minus sign because this is from the contour integral, not residue.
+    res_u = E/(E**2 - (z-ep)**2) * Delta/np.sqrt(Delta**2 - ep**2) * Fermi(ep)
+    res_d = E/(E**2 - (z-em)**2) * Delta/np.sqrt(Delta**2 - em**2) * Fermi(em)
+    return -(res_u-res_d)/(2j*np.pi)
 
 
 def u(t):
@@ -94,7 +107,7 @@ def u(t):
 def J(t):
     return (1+t**2)/(1-t**2)**2
 
-ts = np.linspace(-1+1e-10, 1-1e-10, num=10000)
+ts = np.linspace(-1+1e-10, 1-1e-10, num=1000000)
 ys = np.exp(-u(ts)**2)*J(ts)
 print(trapezoid(ys, ts))
 
@@ -106,7 +119,7 @@ for e in es:
     #                points=(Delta, -Delta, z+E, z-E),limit=5000)
     # res_LHP = quad(SE_f_on_real_im, -100*Delta, 100*Delta, args=(z, False),
     #                points=(Delta, -Delta, z+E, z-E),limit=5000)
-    z = e+1e-3j
+    z = e + 3e-4j
     # res_UHP = quad(SE_eps_on_real_re, -np.inf, np.inf, args=(z, True),
     #                limit=1000)
     # res_LHP = quad(SE_eps_on_real_re, -np.inf, np.inf, args=(z, False),
@@ -115,8 +128,11 @@ for e in es:
     #                limit=1000)
     # res_LHP_im = quad(SE_eps_on_real_im, -np.inf, np.inf, args=(z, False),
     #                limit=1000)
-    res1 = quad(SE_eps_on_real, -np.inf, np.inf, args=(z), epsabs=1e-5, limit=50000, complex_func=True)
-    SE_eps_contour.append((res1[0])*Gamma*Nge)
+    res1L = quad(SE_eps_on_real, -np.inf, e, args=(z), epsabs=1e-5, limit=50000, complex_func=True)
+    res1R = quad(SE_eps_on_real, e, np.inf, args=(z), epsabs=1e-5, limit=50000, complex_func=True)
+    # res1L_im = quad(SE_eps_on_real_im, -np.inf, e, args=(z), epsabs=1e-5, limit=50000, complex_func=True)
+    # res1R_im = quad(SE_eps_on_real_im, e, np.inf, args=(z), epsabs=1e-5, limit=50000, complex_func=True)
+    SE_eps_contour.append((res1L[0]+res1R[0])*Gamma*Nge)
 
     # Trapezoid rule
     # ys = SE_eps_on_real(u(ts), z)*J(ts)
@@ -131,19 +147,21 @@ for e in es:
     #                limit=1000)
     # res_LHP_im = quad(SE_delta_on_real_im, -np.inf, np.inf, args=(z, False),
     #                limit=1000)
-    res2 = quad(SE_delta_on_real, -np.inf, np.inf, args=(z), epsabs=1e-5, limit=50000, complex_func=True)
-    SE_delta_contour.append((res2[0])*Gamma*Nge)
+    # res2 = quad(SE_delta_on_real, -np.inf, np.inf, args=(z), epsabs=1e-5, limit=50000, complex_func=True)
+    res2L = quad(SE_delta_on_real, -np.inf, e, args=(z), epsabs=1e-5, limit=50000, complex_func=True)
+    res2R = quad(SE_delta_on_real, e, np.inf, args=(z), epsabs=1e-5, limit=50000, complex_func=True)
+    SE_delta_contour.append((res2L[0]+res2R[0])*Gamma*Nge)
 
 
 
 def SE_eps_pole():
-    eps = es + 1e-3j 
+    eps = es + 3e-4j 
     res = (-(eps-E)/2)/np.sqrt(Delta**2 - (eps - E)**2)*1/(1-np.exp(-E/T)) \
         -(-(eps+E)/2)/np.sqrt(Delta**2 - (eps + E)**2)*1/(1-np.exp(+E/T))
     return Gamma*Nge*res
 
 def SE_delta_pole():
-    eps = es + 1e-3j 
+    eps = es + 3e-4j 
     res = (Delta/2)/np.sqrt(Delta**2 - (eps - E)**2)*1/(1-np.exp(-E/T)) \
         -(Delta/2)/np.sqrt(Delta**2 - (eps + E)**2)*1/(1-np.exp(+E/T))
     return Gamma*Nge*res
